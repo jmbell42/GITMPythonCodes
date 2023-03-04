@@ -22,6 +22,10 @@ import pdb
 
 # First, we find all 3DALL binary files in the directory and then
 # we simply access the first one.
+cwd = os.getcwd()
+parentdir = os.path.dirname(cwd)
+gitm_sim_dir = parentdir + '/GITMSimulations/Baseline/'
+gitm_sim_names = gitm_sim_dir + '3DALL*.bin'
 
 # Set some global parameters for Text
 rc('font', **{'family': 'serif', 'serif': ['Computer Modern']})
@@ -37,7 +41,8 @@ plt.ioff()
 # FILE 1
 print('===> Searching Working Directory for GITM 3DALL Files. \n')
 filelist = []  # initialize a filelist array
-for file in glob.glob("3DALL*.bin"):
+#for file in glob.glob("../GITMSimulations/3DALL*.bin"):
+for file in glob.glob(gitm_sim_names):
     filelist.append(file)
     
 filelist.sort()
@@ -73,8 +78,15 @@ nAlts = len(alts)
 
 
 # These are the indices of the Altitudes that we want to pull out.
-
+# Pull out key variable names here:
+    
 AltString = list()
+TempVarString = OrigVariableNames[16]
+EastVString = OrigVariableNames[17]
+NorthVString = OrigVariableNames[18] 
+VertVString = OrigVariableNames[19]
+O2DenString = OrigVariableNames[6]
+N2DenString = OrigVariableNames[7]
 
 pdfile = 'ConstantAltitude_TemperatureContours.pdf'
 with PdfPages(pdfile) as pdf:
@@ -91,10 +103,14 @@ with PdfPages(pdfile) as pdf:
 
         print('Accessing iAlt %i',iAlt)
         iAlt = min(iAlt,nAlts-1)
-        Temperature = gdata['Temperature'   ][:nLons,:nLats,iAlt]   # Pull out Temperature
-        U           = gdata['V!Dn!N (east)' ][:nLons,:nLats,iAlt]
-        V           = gdata['V!Dn!N (north)'][:nLons,:nLats,iAlt]
-        W           = gdata['V!Dn!N (up)'][:nLons,:nLats,iAlt]
+#        Temperature = gdata['Temperature'   ][:nLons,:nLats,iAlt]   # Pull out Temperature
+#        U           = gdata['V!Dn!N (east)' ][:nLons,:nLats,iAlt]
+#        V           = gdata['V!Dn!N (north)'][:nLons,:nLats,iAlt]
+#        W           = gdata['V!Dn!N (up)'][:nLons,:nLats,iAlt]
+        Temperature = gdata[TempVarString][:nLons,:nLats,iAlt]   # Pull out Temperature
+        U           = gdata[EastVString][:nLons,:nLats,iAlt]
+        V           = gdata[NorthVString][:nLons,:nLats,iAlt]
+        W           = gdata[VertVString][:nLons,:nLats,iAlt]
         # Create local numpy arrays for plotting
         X = np.linspace(0,1,len(lons))
         Y = np.linspace(0,1,len(lats))
@@ -186,10 +202,10 @@ with PdfPages(pdfile) as pdf:
     for iAlt in range(nAlts):
         print('Accessing iAlt %i',iAlt)
         iAlt = min(iAlt,nAlts-1)
-        Temperature = gdata['Temperature'   ][:nLons,:nLats,iAlt]   # Pull out Temperature
-        U           = gdata['V!Dn!N (east)' ][:nLons,:nLats,iAlt]
-        V           = gdata['V!Dn!N (north)'][:nLons,:nLats,iAlt]
-        W           = gdata['V!Dn!N (up)'][:nLons,:nLats,iAlt]
+        Temperature = gdata[TempVarString  ][:nLons,:nLats,iAlt]   # Pull out Temperature
+        U           = gdata[EastVString ][:nLons,:nLats,iAlt]
+        V           = gdata[NorthVString][:nLons,:nLats,iAlt]
+        W           = gdata[VertVString][:nLons,:nLats,iAlt]
         # Create local numpy arrays for plotting
         X = np.linspace(0,1,len(lons))
         Y = np.linspace(0,1,len(lats))
@@ -265,10 +281,10 @@ with PdfPages(pdfile) as pdf:
     for iAlt in range(nAlts):
         print('Accessing iAlt %i',iAlt)
         iAlt = min(iAlt,nAlts-1)
-        Temperature = gdata['Temperature'   ][:nLons,:nLats,iAlt]   # Pull out Temperature
-        U           = gdata['V!Dn!N (east)' ][:nLons,:nLats,iAlt]
-        V           = gdata['V!Dn!N (north)'][:nLons,:nLats,iAlt]
-        W           = gdata['V!Dn!N (up)'][:nLons,:nLats,iAlt]
+        Temperature = gdata[TempVarString  ][:nLons,:nLats,iAlt]   # Pull out Temperature
+        U           = gdata[EastVString ][:nLons,:nLats,iAlt]
+        V           = gdata[NorthVString][:nLons,:nLats,iAlt]
+        W           = gdata[VertVString][:nLons,:nLats,iAlt]
         # Create local numpy arrays for plotting
         X = np.linspace(0,1,len(lons))
         Y = np.linspace(0,1,len(lats))
@@ -346,10 +362,10 @@ with PdfPages(pdfile) as pdf:
     for iAlt in range(nAlts):
         print('Accessing iAlt %i',iAlt)
         iAlt = min(iAlt,nAlts-1)
-        Temperature = gdata['Temperature'   ][:nLons,:nLats,iAlt]   # Pull out Temperature
-        U           = gdata['V!Dn!N (east)' ][:nLons,:nLats,iAlt]
-        V           = gdata['V!Dn!N (north)'][:nLons,:nLats,iAlt]
-        W           = gdata['V!Dn!N (up)'][:nLons,:nLats,iAlt]
+        Temperature = gdata[TempVarString  ][:nLons,:nLats,iAlt]   # Pull out Temperature
+        U           = gdata[EastVString ][:nLons,:nLats,iAlt]
+        V           = gdata[NorthVString][:nLons,:nLats,iAlt]
+        W           = gdata[VertVString][:nLons,:nLats,iAlt]
         # Create local numpy arrays for plotting
         X = np.linspace(0,1,len(lons))
         Y = np.linspace(0,1,len(lats))
@@ -433,10 +449,8 @@ with PdfPages(pdfile) as pdf:
 #       V           = gdata['V!Dn!N (north)'][:nLons,:nLats,iAlt]
 #       W           = gdata['V!Dn!N (up)'][:nLons,:nLats,iAlt]
 #        Rho         = gdata['Rho'][:nLons,:nLats,iAlt]
-        nN2 = gdata['N2'   ][:nLons,:nLats,iAlt]   # Pull out Temperature
-        nCH4 = gdata['CH4' ][:nLons,:nLats,iAlt]   # Pull out Temperature
-        nH2 = gdata['H2'   ][:nLons,:nLats,iAlt]   # Pull out Temperature
-        nNT = nN2 + nCH4 + nH2
+        nN2 = gdata[N2DenString  ][:nLons,:nLats,iAlt]   # Pull out Temperature
+        nNT = nN2
 
         # Create local numpy arrays for plotting
         X = np.linspace(0,1,len(lons))
